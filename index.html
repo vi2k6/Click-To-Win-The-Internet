@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>You Win The Internet</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: radial-gradient(circle, #f7e9ff, #d3bfff);
+      font-family: 'Comic Sans MS', cursive;
+      text-align: center;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    h1 {
+      font-size: 3rem;
+      color: #6a1b9a;
+      margin-bottom: 30px;
+    }
+
+    button {
+      padding: 20px 40px;
+      font-size: 2rem;
+      border: none;
+      border-radius: 15px;
+      background-color: #ba68c8;
+      color: white;
+      cursor: pointer;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+      transition: transform 0.2s;
+    }
+
+    button:hover {
+      background-color: #9c27b0;
+      transform: scale(1.05);
+    }
+
+    .winner-text {
+      margin-top: 30px;
+      font-size: 2rem;
+      color: #4a148c;
+      display: none;
+    }
+
+    #counter {
+      margin-top: 15px;
+      font-size: 1.2rem;
+      color: #7b1fa2;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>CLICK TO WIN THE INTERNET</h1>
+  <button onclick="winInternet()">CLICK ME</button>
+  <div class="winner-text" id="winText">🎉 YOU WON THE INTERNET 🎉</div>
+  <div id="counter">You are winner #<span id="count">8439211</span></div>
+
+  <!-- Confetti JS CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+  <!-- Optional Cheer Sound -->
+  <audio id="cheer" src="https://www.soundjay.com/human/applause-01.mp3"></audio>
+
+  <script>
+    function winInternet() {
+      const winText = document.getElementById("winText");
+      winText.style.display = "block";
+
+      // Confetti burst
+      confetti({
+        particleCount: 200,
+        spread: 80,
+        origin: { y: 0.6 }
+      });
+
+      // Play cheer sound
+      document.getElementById("cheer").play();
+
+      // Increase fake counter
+      const count = document.getElementById("count");
+      count.innerText = parseInt(count.innerText) + 1;
+    }
+  </script>
+
+</body>
+</html>
