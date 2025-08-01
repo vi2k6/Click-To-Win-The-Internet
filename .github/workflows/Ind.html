@@ -1,91 +1,124 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>You Win The Internet</title>
+  <meta charset="UTF-8">
+  <title>SnailNav 🐌 | Slowest Navigation System</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     body {
-      margin: 0;
-      padding: 0;
-      background: radial-gradient(circle, #f7e9ff, #d3bfff);
-      font-family: 'Comic Sans MS', cursive;
-      text-align: center;
-      height: 100vh;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to right, #e0c3fc, #8ec5fc);
       display: flex;
       flex-direction: column;
+      align-items: center;
       justify-content: center;
+      height: 100vh;
+      margin: 0;
+      text-align: center;
     }
 
     h1 {
-      font-size: 3rem;
-      color: #6a1b9a;
-      margin-bottom: 30px;
+      font-size: 2.8rem;
+      margin-bottom: 20px;
+      color: #4a148c;
+    }
+
+    .input-group {
+      margin-bottom: 15px;
+    }
+
+    input {
+      padding: 12px;
+      font-size: 1rem;
+      border: none;
+      border-radius: 8px;
+      width: 250px;
+      margin: 5px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
     }
 
     button {
-      padding: 20px 40px;
-      font-size: 2rem;
-      border: none;
-      border-radius: 15px;
-      background-color: #ba68c8;
+      padding: 10px 20px;
+      font-size: 1.2rem;
+      background-color: #6a1b9a;
       color: white;
+      border: none;
+      border-radius: 8px;
       cursor: pointer;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.3);
-      transition: transform 0.2s;
+      margin-top: 10px;
+      transition: 0.3s ease;
     }
 
     button:hover {
-      background-color: #9c27b0;
-      transform: scale(1.05);
+      background-color: #4a148c;
     }
 
-    .winner-text {
+    .result {
       margin-top: 30px;
-      font-size: 2rem;
-      color: #4a148c;
-      display: none;
+      font-size: 1.4rem;
+      color: #311b92;
     }
 
-    #counter {
+    .snail {
+      font-size: 3rem;
+      animation: crawl 3s infinite linear;
+      display: inline-block;
       margin-top: 15px;
-      font-size: 1.2rem;
-      color: #7b1fa2;
+    }
+
+    @keyframes crawl {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(100px); }
     }
   </style>
 </head>
 <body>
 
-  <h1>CLICK TO WIN THE INTERNET</h1>
-  <button onclick="winInternet()">CLICK ME</button>
-  <div class="winner-text" id="winText">🎉 YOU WON THE INTERNET 🎉</div>
-  <div id="counter">You are winner #<span id="count">8439211</span></div>
+  <h1>🐌 SnailNav - The Slowest Navigation System</h1>
 
-  <!-- Confetti JS CDN -->
-  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-  <!-- Optional Cheer Sound -->
-  <audio id="cheer" src="https://www.soundjay.com/human/applause-01.mp3"></audio>
+  <div class="input-group">
+    <input type="text" id="from" placeholder="From (source)">
+    <input type="text" id="to" placeholder="To (destination)">
+  </div>
+
+  <button onclick="calculateSnailETA()">Get Snail ETA</button>
+
+  <div class="result" id="result"></div>
+  <div class="snail">🐌</div>
 
   <script>
-    function winInternet() {
-      const winText = document.getElementById("winText");
-      winText.style.display = "block";
+    function getRandomDistance() {
+      // Generates a fake distance between 50 km and 2000 km
+      return Math.floor(Math.random() * 1950) + 50;
+    }
 
-      // Confetti burst
-      confetti({
-        particleCount: 200,
-        spread: 80,
-        origin: { y: 0.6 }
-      });
+    function calculateSnailETA() {
+      const from = document.getElementById('from').value;
+      const to = document.getElementById('to').value;
+      const result = document.getElementById('result');
 
-      // Play cheer sound
-      document.getElementById("cheer").play();
+      if (!from || !to) {
+        result.innerHTML = "Please enter both source and destination!";
+        return;
+      }
 
-      // Increase fake counter
-      const count = document.getElementById("count");
-      count.innerText = parseInt(count.innerText) + 1;
+      const snailSpeedKmH = 0.048; // Average snail speed
+      const distance = getRandomDistance(); // Fake distance in km
+      const timeInHours = distance / snailSpeedKmH;
+      const timeInDays = timeInHours / 24;
+      const timeInYears = timeInDays / 365;
+
+      const formattedDays = Math.floor(timeInDays);
+      const formattedYears = timeInYears.toFixed(2);
+
+      result.innerHTML = `
+        📍 Estimated distance from <b>${from}</b> to <b>${to}</b>: <b>${distance} km</b><br><br>
+        🐌 At snail speed (0.048 km/h), your snail will arrive in:<br>
+        <b>${formattedDays} days</b> (~${formattedYears} years)<br><br>
+        Good luck... bring snacks. 🍃
+      `;
     }
   </script>
 
 </body>
-  </html>
+</html>
